@@ -17,6 +17,10 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
 
+        if not validate_password(password):
+            flash("Пароль повинен містити не менше 8 символів")
+            return redirect(url_for("auth.register"))
+
         hashed_password = generate_password_hash(password) # type: ignore
 
         user = User(username=username, email=email, hash_password=hashed_password)
@@ -25,8 +29,11 @@ def register():
             session.commit()
 
         flash("Registration successful")
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("login"))
     return render_template("auth/register.html")
+
+def validate_password(password):
+    return len(password) >= 8
 
 
 @bp.route("/login", methods=["GET", "POST"])

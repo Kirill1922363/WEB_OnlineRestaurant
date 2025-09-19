@@ -6,6 +6,18 @@ from flask import Blueprint
 bp = Blueprint('error', __name__)
 
 
+@bp.errorhandler(401)
+def forbidden_error(error):
+    return render_template("errors/401.html")
+
 @bp.errorhandler(403)
 def forbidden_error(error):
     return render_template("errors/403.html")
+
+@bp.errorhandler(404)
+def forbidden_error(error):
+    return render_template("errors/404.html")
+
+@bp.errorhandler(500)
+def forbidden_error(error):
+    return render_template("errors/500.html")
