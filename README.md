@@ -38,17 +38,18 @@ Extras: Flask-Login, Flask-WTF, Flask-Migrate
 
 Clone the repository:
 
-git clone https://github.com/yourusername/online-coffee-shop.git
+```git clone https://github.com/yourusername/online-coffee-shop.git
 cd online-coffee-shop
+```
 
 
 Create and activate a virtual environment:
 
-python -m venv venv
+```python -m venv venv```
 # Windows
 venv\Scripts\activate
 # Mac/Linux
-source venv/bin/activate
+```source venv/bin/activate```
 
 
 Install dependencies:
@@ -58,17 +59,20 @@ pip install -r requirements.txt
 
 Configure environment variables in a .env file:
 
-FLASK_APP=app.py
-FLASK_ENV=development
-SECRET_KEY=your_secret_key
-DATABASE_URL=sqlite:///coffee_shop.db
+```env
+# Database configuration
+DATABASE_NAME="your_database_name"
+DB_USER="your_db_user"
+DB_PASSWORD="your_db_password"
 
+ROOT_DB_USER="your_root_user"
+ROOT_DB_PASSWORD="your_root_password"
+
+# Flask secret key
+SECRET_KEY="your_secret_key"
 
 Initialize the database:
-
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
+```
 
 
 Run the application:
