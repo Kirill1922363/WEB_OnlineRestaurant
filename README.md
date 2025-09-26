@@ -1,4 +1,12 @@
-Online Coffee Shop on Flask ☕
+# Online Coffee Shop on Flask ☕
+
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue?logo=python)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-2.3+-orange?logo=flask)](https://flask.palletsprojects.com/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-yellow?logo=sqlalchemy)](https://www.sqlalchemy.org/)
+[![python-dotenv](https://img.shields.io/badge/python--dotenv-0.21+-green?logo=python)](https://pypi.org/project/python-dotenv/)
+[![Flask-Login](https://img.shields.io/badge/Flask--Login-0.6+-blue?logo=flask)](https://flask-login.readthedocs.io/)
+[![Flask-WTF](https://img.shields.io/badge/Flask--WTF-1.1+-red?logo=python)](https://flask-wtf.readthedocs.io/)
+[![Flask-Caching](https://img.shields.io/badge/Flask--Caching-2.0+-purple?logo=python)](https://flask-caching.readthedocs.io/)
 
 This web application simulates an online coffee shop where users can browse the menu, add items to the cart, and place orders.
 
