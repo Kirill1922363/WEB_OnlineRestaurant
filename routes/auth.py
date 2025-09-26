@@ -29,7 +29,7 @@ def register():
             session.commit()
 
         flash("Registration successful")
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
     return render_template("auth/register.html")
 
 def validate_password(password):
@@ -47,7 +47,7 @@ def login():
             login_user(user)
             flash("Login successful")
             
-            return redirect(url_for("index"))
+            return redirect(url_for("auth.register"))
         flash("Invalid username or password")
 
     return render_template("auth/login.html")

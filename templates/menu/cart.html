@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Кошик - Aurora{% endblock title %}
+
+{% block content %}
+<div class="cart-page">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="logo" href="#">Aurora <span>☕</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('menu.list_menu_items') }}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('index') }}">About us</a>
+                    </li>
+                    
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.is_admin %}
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="{{ url_for('admin.admin_panel') }}">Admin Panel</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('auth.logout') }}">Logout ({{ current_user.username }})</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('auth.login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('auth.register') }}">Register</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Hero секция -->
+    <div class="hero">
+        <h1>Ваш кошик</h1>
+        <p>Перевірте ваші обрані страви перед замовленням</p>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if cart_items %}
+        <div class="cart-content">
+            <div class="cart-items">
+                {% for item in cart_items %}
+                <div class="cart-item" data-item-id="{{ item.id }}">
+                    <div class="item-image">
+            
+                    </div>
+                    
+                    <div class="item-details">
+                        <h3>{{ item.name }}</h3>
+                        <p class="item-description">{{ item.description }}</p>
+                        <p class="item-price">{{ item.price }} грн</p>
+                    </div>
+                    
+                    <div class="item-quantity">
+                        <button class="quantity-btn minus" data-item-id="{{ item.id }}">-</button>
+                        <span class="quantity">{{ item.quantity }}</span>
+                        <button class="quantity-btn plus" data-item-id="{{ item.id }}">+</button>
+                    </div>
+                    
+                    <div class="item-total">
+                        <strong>{{ item.price * item.quantity }} грн</strong>
+                    </div>
+                    
+                    <div class="item-actions">
+                        <button class="remove-btn" data-item-id="{{ item.id }}" title="Видалити">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3>Підсумок замовлення</h3>
+                    
+                    <div class="summary-row">
+                        <span>Товари ({{ cart_total_quantity }})</span>
+                        <span>{{ cart_subtotal }} грн</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Доставка</span>
+                        <span>
+                            {% if cart_subtotal > 300 %}
+                                <span class="text-success">Безкоштовно</span>
+                            {% else %}
+                                50 грн
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="summary-row discount">
+                        <span>Знижка</span>
+                        <span class="text-success">-{{ cart_discount }} грн</span>
+                    </div>
+                    
+                    <div class="summary-row total">
+                        <strong>Всього</strong>
+                        <strong>{{ cart_total }} грн</strong>
+                    </div>
+                    
+                    {% if cart_subtotal <= 300 %}
+                    <div class="free-delivery-info">
+                        <i class="bi bi-info-circle"></i>
+                        Додайте ще {{ 300 - cart_subtotal }} грн для безкоштовної доставки
+                    </div>
+                    {% endif %}
+                    
+                    <div class="promo-code">
+                        <label for="promo-code" class="form-label">Промокод</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="promo-code" placeholder="Введіть промокод">
+                            <button class="btn btn-outline-secondary" type="button">Застосувати</button>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-checkout">
+                            <i class="bi bi-credit-card"></i> Оформити замовлення
+                        </button>
+                        <a href="{{ url_for('menu.list_menu_items') }}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Продовжити покупки
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <div class="empty-icon">
+                <i class="bi bi-cart-x"></i>
+            </div>
+            <h2>Кошик порожній</h2>
+            <p>Додайте страви з меню, щоб зробити замовлення</p>
+            <a href="{{ url_for('menu.list_menu_items') }}" class="btn btn-primary">
+                <i class="bi bi-menu-up"></i> Перейти до меню
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Як нас знайти</h3>
+                    <p>вул. Вінтажна, 42</p>
+                    <p>м. Київ</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Години роботи</h3>
+                    <p>Понеділок - П'ятниця: 8:00 - 22:00</p>
+                    <p>Субота - Неділя: 9:00 - 23:00</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Соціальні мережі</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Кав'ярня Aurora. Усі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock content %}
+

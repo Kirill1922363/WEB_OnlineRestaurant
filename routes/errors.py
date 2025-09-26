@@ -22,7 +22,3 @@ def forbidden_error(error):
 def forbidden_error(error):
     return render_template("errors/500.html")
 
-
-@bp.errorhandler(501)
-def forbidden_error(error):
-    return render_template("errors/500.html")
