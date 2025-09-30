@@ -39,6 +39,7 @@ Extras: Flask-Login, Flask-WTF
 Clone the repository:
 
 ```git clone https://github.com/yourusername/online-coffee-shop.git```
+
 ```cd online-coffee-shop```
 
 
