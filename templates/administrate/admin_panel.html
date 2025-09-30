@@ -25,7 +25,7 @@
             <td>{{ "active" if pos.active else "disabled" }}</td>
             <td>
                 <form method="post">
-                    {{ csrf_token() }}
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="pos_id" value="{{ pos.id }}">
                     <button type="submit" name="change_status">Змінити статус</button>
                     <button type="submit" name="delete_position">Видалити</button>

@@ -45,9 +45,7 @@
                             <a class="nav-link text-light" href="{{ url_for('auth.logout') }}">Logout ({{ current_user.username }})</a>
                         </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ url_for('auth.login') }}">Login</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-light" href="{{ url_for('auth.register') }}">Register</a>
                         </li>

@@ -12,9 +12,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ url_for('menu.list_menu_items') }}">Menu</a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ url_for('index') }}">About us</a>
                     </li>
@@ -126,12 +124,7 @@
                         <strong>{{ cart_total }} грн</strong>
                     </div>
                     
-                    {% if cart_subtotal <= 300 %}
-                    <div class="free-delivery-info">
-                        <i class="bi bi-info-circle"></i>
-                        Додайте ще {{ 300 - cart_subtotal }} грн для безкоштовної доставки
-                    </div>
-                    {% endif %}
+
                     
                     <div class="promo-code">
                         <label for="promo-code" class="form-label">Промокод</label>

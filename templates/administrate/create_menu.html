@@ -5,38 +5,35 @@
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">➕ Додаємо нову позицію меню</h1>
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <div class="card shadow-sm p-4">
-        <form method="post" enctype="multipart/form-data">
-
-
-            <div class="mb-3">
-                <label for="name" class="form-label">Назва страви</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Введіть назву страви" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="description" class="form-label">Опис страви</label>
-                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Введіть опис страви"></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="price" class="form-label">Ціна (грн)</label>
-                <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="image" class="form-label">Зображення</label>
-                <input class="form-control" type="file" id="image" name="image" accept="image/*">
-            </div>
-
-            <div class="mb-3">
-                <label for="category" class="form-label">Категорія</label>
-                <input type="text" class="form-control" id="category" name="category" placeholder="Наприклад: салати, гарячі страви, десерти" required>
-            </div>
-
-            <button type="submit" class="btn btn-success w-100">✅ Додати страву</button>
-        </form>
+    <div class="mb-3">
+        <label for="name" class="form-label">Назва страви</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Введіть назву страви" required>
     </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Опис страви</label>
+        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Введіть опис страви"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label">Ціна (грн)</label>
+        <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Зображення</label>
+        <input class="form-control" type="file" id="image" name="image" accept="image/*">
+    </div>
+
+    <div class="mb-3">
+        <label for="category" class="form-label">Категорія</label>
+        <input type="text" class="form-control" id="category" name="category" placeholder="Наприклад: салати, гарячі страви, десерти" required>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">✅ Додати страву</button>
+</form>
 </div>
 {% endblock content %}

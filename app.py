@@ -39,6 +39,7 @@ app.register_blueprint(errors.bp, url_prefix="/error")
 
 
 
+
 if __name__ == "__main__":
     print(app.url_map)
     app.run(debug=True, port=5050)
