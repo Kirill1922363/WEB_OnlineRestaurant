@@ -28,26 +28,26 @@ Responsive design for mobile-friendly use.
 
 Backend: Python, Flask
 
-Database: SQLite / PostgreSQL
+Database: PostgreSQL
 
 Frontend: HTML, CSS, Jinja2 (Flask templates)
 
-Extras: Flask-Login, Flask-WTF, Flask-Migrate
+Extras: Flask-Login, Flask-WTF
 
 ⚡ Installation & Setup
 
 Clone the repository:
 
-```git clone https://github.com/yourusername/online-coffee-shop.git
-cd online-coffee-shop
-```
+```git clone https://github.com/yourusername/online-coffee-shop.git```
+```cd online-coffee-shop```
+
 
 
 Create and activate a virtual environment:
 
 ```python -m venv venv```
 # Windows
-venv\Scripts\activate
+```venv\Scripts\activate```
 # Mac/Linux
 ```source venv/bin/activate```
 
