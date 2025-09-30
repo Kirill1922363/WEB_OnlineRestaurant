@@ -83,6 +83,23 @@ flask run
 
 Open your browser at http://127.0.0.1:5000
 
+📁 Project Structure
+online-coffee-shop/
+├── app.py
+├── config.py
+├── requirements.txt
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── menu.html
+│   └── ...
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── models.py
+├── forms.py
+└── ...
 
 📝 Notes
 
