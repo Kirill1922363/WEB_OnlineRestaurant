@@ -12,7 +12,7 @@ This web application simulates an online coffee shop where users can browse the 
 
 The application is built using Flask and popular Python libraries.
 
-#📌 Features
+# 📌 Features
 
 Browse the menu with different categories of drinks and desserts.
 
@@ -24,7 +24,7 @@ Admin panel for managing menu items and orders.
 
 Responsive design for mobile-friendly use.
 
-#🛠 Technologies
+# 🛠 Technologies
 
 Backend: Python, Flask
 
@@ -34,7 +34,7 @@ Frontend: HTML, CSS, Jinja2 (Flask templates)
 
 Extras: Flask-Login, Flask-WTF
 
-#⚡ Installation & Setup
+# ⚡ Installation & Setup
 
 Clone the repository:
 
@@ -47,9 +47,9 @@ Clone the repository:
 Create and activate a virtual environment:
 
 ```python -m venv venv```
-# Windows
+ Windows
 ```venv\Scripts\activate```
-# Mac/Linux
+ Mac/Linux
 ```source venv/bin/activate```
 
 
@@ -83,7 +83,7 @@ flask run
 
 Open your browser at http://127.0.0.1:5000
 
-📝 Notes
+# 📝 Notes
 
 Make sure to set a secure SECRET_KEY for production.
 
