@@ -1,4 +1,4 @@
-## Online Coffee Shop on Flask ☕
+# Online Coffee Shop on Flask ☕
 
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue?logo=python)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-2.3+-orange?logo=flask)](https://flask.palletsprojects.com/)
@@ -12,7 +12,7 @@ This web application simulates an online coffee shop where users can browse the 
 
 The application is built using Flask and popular Python libraries.
 
-##📌 Features
+#📌 Features
 
 Browse the menu with different categories of drinks and desserts.
 
@@ -24,7 +24,7 @@ Admin panel for managing menu items and orders.
 
 Responsive design for mobile-friendly use.
 
-##🛠 Technologies
+#🛠 Technologies
 
 Backend: Python, Flask
 
@@ -34,7 +34,7 @@ Frontend: HTML, CSS, Jinja2 (Flask templates)
 
 Extras: Flask-Login, Flask-WTF
 
-##⚡ Installation & Setup
+#⚡ Installation & Setup
 
 Clone the repository:
 
