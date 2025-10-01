@@ -3,36 +3,90 @@
 {% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
-    <h1>Адмін-панель</h1>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('admin.create_menu') }}">Додати нову позицію меню</a></li>
-            <li><a href="{{ url_for('admin.all_orders') }}">Замовлення</a></li>
-        </ul>
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_panel.css') }}">
+{% endblock head %}
+
+   
+       <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="logo" href="#">Aurora <span>☕</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('menu.list_menu_items') }}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url_for('index') }}">About us</a>
+                    </li>
+                    
+                    
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.is_admin %}
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="{{ url_for('admin.admin_panel') }}">Admin Panel</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('auth.logout') }}">Logout ({{ current_user.username }})</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ url_for('auth.login') }}">Login</a>
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+            </div>
+
+        </div>
     </nav>
 
-    <h2>Меню</h2>
-    <table>
-        <tr>
-            <th>ID</th><th>Назва</th><th>Опис</th><th>Ціна</th><th>Активний</th><th>Дія</th>
-        </tr>
-        {% for pos in all_positions %}
-        <tr>
-            <td>{{ pos.id }}</td>
-            <td>{{ pos.name }}</td>
-            <td>{{ pos.description }}</td>
-            <td>{{ pos.price }}</td>
-            <td>{{ "active" if pos.active else "disabled" }}</td>
-            <td>
-                <form method="post">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="pos_id" value="{{ pos.id }}">
-                    <button type="submit" name="change_status">Змінити статус</button>
-                    <button type="submit" name="delete_position">Видалити</button>
-                    <button type="submit" name="change_position">Змінити</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+
+    <div class="content-wrapper">
+        <h1>Адмін-панель</h1>
+     
+        <nav>
+            <ul>
+                <a href="{{ url_for('admin.create_menu') }}" class="btn btn-primary">Додати нову позицію меню</a>
+                <a href="{{ url_for('admin.all_orders') }}" class="btn btn-primary">Замовлення</a>
+                <a href="{{ url_for('admin.all_users') }}" class="btn btn-primary">Всі користувачі</a>
+            </ul>
+        </nav>
+
+        <h2>Меню</h2>
+        <table>
+            <tr>
+                <th>ID</th><th>Назва</th><th>Опис</th><th>Ціна</th><th>Активний</th><th>Дія</th>
+            </tr>
+            {% for pos in all_positions %}
+            <tr>
+                <td data-label="ID">{{ pos.id }}</td>
+                <td data-label="Назва">{{ pos.name }}</td>
+                <td data-label="Опис">{{ pos.description }}</td>
+                <td data-label="Ціна">{{ pos.price }}</td>
+                <td data-label="Статус">{{ "active" if pos.active else "disabled" }}</td>
+                <td data-label="Дія">
+                    <form method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="pos_id" value="{{ pos.id }}">
+                        <button type="submit" name="change_status">Змінити статус</button>
+                        <button type="submit" name="delete_position">Видалити</button>
+                        <button type="submit" name="change_position">Змінити</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    
 {% endblock content %}
+
+
+

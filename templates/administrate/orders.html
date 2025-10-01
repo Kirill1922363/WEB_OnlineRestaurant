@@ -1,33 +1,42 @@
-{% extends "base.html" %}
-
-{% block title %}{{ title }}{% endblock title %}
-
+% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <h1>Усі замовлення</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Користувач</th>
-            <th>Статус</th>
-            <th>Дія</th>
-        </tr>
-        {% for order, user in orders_results %}
-        <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ order.status }}</td>
-            <td>
-                {% if order.status == "active" %}
-                <form method="post">
-                    {{ csrf_token() }}
-                    <input type="hidden" name="order_id" value="{{ order.id }}">
-                    <button type="submit">Позначити як виконане</button>
-                </form>
-                {% else %}
-                    Виконано
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Всі замовлення</h1>
+    
+    {% if orders_results %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Користувач</th>
+                <th>Email</th>
+                <th>Час замовлення</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order, user in orders_results %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                <td>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-{% endblock content %}
+    {% else %}
+    <div class="alert alert-info">Замовлень не знайдено.</div>
+    {% endif %}
+</div>
+
+{% endblock %}

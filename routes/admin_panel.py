@@ -145,3 +145,10 @@ def all_orders():
         orders_results = cursor.execute(stmt).fetchall()
 
     return render_template("administrate/orders.html", orders_results=orders_results)
+
+@bp.route("/users", methods=["GET"])
+@admin_required
+def all_users():
+    with Session() as session:
+        users = session.scalars(select(User)).all()
+    return render_template("administrate/all_users.html", users=users, title="Все пользователи")
