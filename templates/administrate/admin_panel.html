@@ -58,6 +58,11 @@
                 <a href="{{ url_for('admin.all_users') }}" class="btn btn-primary">Всі користувачі</a>
             </ul>
         </nav>
+        <div class="mb-3">
+            <a href="{{ url_for('admin.admin_panel', status='all') }}" class="btn btn-secondary {% if current_filter == 'all' %}active{% endif %}">Всі</a>
+            <a href="{{ url_for('admin.admin_panel', status='active') }}" class="btn btn-success {% if current_filter == 'active' %}active{% endif %}">Активні</a>
+            <a href="{{ url_for('admin.admin_panel', status='inactive') }}" class="btn btn-warning {% if current_filter == 'inactive' %}active{% endif %}">Неактивні</a>
+        </div>
 
         <h2>Меню</h2>
         <table>

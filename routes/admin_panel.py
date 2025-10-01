@@ -25,7 +25,6 @@ def admin_required(func):
     return wrapper
 
 
-# --- Панель адміністратора ---
 @bp.route("/", methods=["GET", "POST"])
 @admin_required
 def admin_panel():
@@ -48,13 +47,25 @@ def admin_panel():
 
         return redirect(url_for("admin.admin_panel"))
 
+    filter_status = request.args.get("status", "all")
+    
     with Session() as session:
-        stmt = select(Menu)
+        if filter_status == "active":
+            stmt = select(Menu).where(Menu.active == True)
+        elif filter_status == "inactive":
+            stmt = select(Menu).where(Menu.active == False)
+        else:
+            stmt = select(Menu)
+        
         positions = session.scalars(stmt).all()
 
     return render_template(
-        "administrate/admin_panel.html", title="Admin Panel", all_positions=positions
+        "administrate/admin_panel.html", 
+        title="Admin Panel", 
+        all_positions=positions,
+        current_filter=filter_status
     )
+
 
 
 # --- Створення нового меню ---
