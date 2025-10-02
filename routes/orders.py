@@ -63,3 +63,32 @@ def delete_order(order_id):
             session.commit()
             flash("Замовлення видалено", "success")
     return redirect(url_for("orders.order_history"))
+
+
+@bp.route("/basket")
+@login_required
+def view_basket():
+    basket = session.get("basket", {})
+    if not basket:
+        return render_template("orders/basket.html", basket=None)
+    
+    menu_ids = [int(id) for id in basket.keys()]
+    with Session() as db_session:
+        menu_items = db_session.scalars(select(Menu).filter(Menu.id.in_(menu_ids))).all()
+    
+    basket_items = {}
+    for item in menu_items:
+        quantity = basket[str(item.id)]
+        basket_items[item] = quantity
+    
+    return render_template("orders/basket.html", basket=basket_items)
+
+@bp.route("/remove_from_basket/<int:item_id>", methods=["POST"])
+@login_required
+def remove_from_basket(item_id):
+    basket = session.get("basket", {})
+    if str(item_id) in basket:
+        del basket[str(item_id)]
+        session["basket"] = basket
+        flash("Позицію видалено з кошика", "info")
+    return redirect(url_for("orders.view_basket"))

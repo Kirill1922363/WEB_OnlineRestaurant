@@ -1,5 +1,5 @@
 from flask import Flask,  render_template
-
+import os
 from settings import DatabaseConfig
 from flask_login import LoginManager
 from models import User
@@ -43,3 +43,4 @@ app.register_blueprint(errors.bp, url_prefix="/error")
 if __name__ == "__main__":
     print(app.url_map)
     app.run(debug=True, port=5050)
+    print("DATABASE_URL =", os.getenv("DATABASE_URL"))

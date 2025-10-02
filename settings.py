@@ -6,6 +6,9 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 dotenv.load_dotenv()
 
 class DatabaseConfig:
+    DATABASE_HOST = os.getenv("DATABASE_HOST")
+    DATABASE_PORT = os.getenv("DATABASE_PORT")
+
     DATABASE_URL = os.getenv("DATABASE_URL")  # Для Render
     DATABASE_NAME = os.getenv("DATABASE_NAME", "db_auth")
     DB_USER = os.getenv("DB_USER", "postgres")
@@ -18,7 +21,7 @@ class DatabaseConfig:
     def uri_postgres(self):
         if self.DATABASE_URL:
             return self.DATABASE_URL.replace("postgres://", "postgresql://", 1)
-        return f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PASSWORD}@localhost:5432/{self.DATABASE_NAME}"
+        return f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PASSWORD}@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
 
     def uri_sqlite(self):
         return f"sqlite:///{self.DATABASE_NAME}.db"

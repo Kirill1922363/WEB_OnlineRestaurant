@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Кошик{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Ваш кошик</h1>
+    
+    {% if basket %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Назва</th>
+                    <th>Ціна</th>
+                    <th>Кількість</th>
+                    <th>Сума</th>
+                    <th>Дія</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = 0 %}
+                {% for item, quantity in basket.items() %}
+                    {% set subtotal = item.price * quantity %}
+                    {% set total = total + subtotal %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }} грн</td>
+                        <td>{{ quantity }}</td>
+                        <td>{{ subtotal }} грн</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('orders.remove_from_basket', item_id=item.id) }}" style="display:inline;">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3"><strong>Всього:</strong></td>
+                    <td colspan="2"><strong>{{ total }} грн</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <form method="POST" action="{{ url_for('orders.create_order') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-success">Оформити замовлення</button>
+        </form>
+        
+        <form method="POST" action="{{ url_for('orders.clear_basket') }}" class="mt-2">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-warning">Очистити кошик</button>
+        </form>
+    {% else %}
+        <div class="alert alert-info">Ваш кошик порожній</div>
+        <a href="{{ url_for('menu.list_menu_items') }}" class="btn btn-primary">Перейти до меню</a>
+    {% endif %}
+</div>
+
+{% endblock %}
