@@ -82,30 +82,33 @@ class Menu(Base):
     menu_orders: Mapped[list["OrderMenu"]] = relationship(
         back_populates="menu", lazy="selectin", cascade="all, delete-orphan"
     )
+
     @classmethod
     def get_positions_paginated(cls, page: int = 1, per_page: int = 9):
         with Session() as session:
             stmt = select(cls).where(cls.active == True).order_by(cls.id)
-            
-            count_stmt = select(func.count()).select_from(select(cls).where(cls.active == True).subquery())
+
+            count_stmt = select(func.count()).select_from(
+                select(cls).where(cls.active == True).subquery()
+            )
             total = session.scalar(count_stmt)
-            
+
             offset = (page - 1) * per_page
             products = session.scalars(stmt.offset(offset).limit(per_page)).all()
-            
+
             return {
-                'products': products,
-                'total': total,
-                'page': page,
-                'per_page': per_page,
-                'pages': (total + per_page - 1) // per_page,
-                'has_prev': page > 1,
-                'has_next': page < (total + per_page - 1) // per_page,
-                'prev_num': page - 1 if page > 1 else None,
-                'next_num': page + 1 if page < (total + per_page - 1) // per_page else None
+                "products": products,
+                "total": total,
+                "page": page,
+                "per_page": per_page,
+                "pages": (total + per_page - 1) // per_page,
+                "has_prev": page > 1,
+                "has_next": page < (total + per_page - 1) // per_page,
+                "prev_num": page - 1 if page > 1 else None,
+                "next_num": (
+                    page + 1 if page < (total + per_page - 1) // per_page else None
+                ),
             }
-
-
 
     def __repr__(self) -> str:
         return f"Menu: {self.id}, {self.name}"

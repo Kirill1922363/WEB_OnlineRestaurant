@@ -1,4 +1,4 @@
-from flask import Flask,  render_template
+from flask import Flask, render_template
 import os
 from settings import DatabaseConfig
 from flask_login import LoginManager
@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config.from_object(DatabaseConfig)
 
 login_manager = LoginManager()
-login_manager.login_view = "123" # type: ignore
+login_manager.login_view = "123"  # type: ignore
 login_manager.init_app(app)
 
 csrf = CSRFProtect(app)
@@ -28,16 +28,16 @@ def load_user(user_id):
 def index():
     return render_template("index.html")
 
+
 @app.context_processor
 def inject_csrf_token():
     return dict(csrf_token=generate_csrf)
+
 
 app.register_blueprint(menu.bp, url_prefix="/")
 app.register_blueprint(auth.bp, url_prefix="/auth")
 app.register_blueprint(admin_panel.bp, url_prefix="/admin")
 app.register_blueprint(errors.bp, url_prefix="/error")
-
-
 
 
 if __name__ == "__main__":

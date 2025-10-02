@@ -5,6 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 dotenv.load_dotenv()
 
+
 class DatabaseConfig:
     DATABASE_HOST = os.getenv("DATABASE_HOST")
     DATABASE_PORT = os.getenv("DATABASE_PORT")
@@ -26,17 +27,17 @@ class DatabaseConfig:
     def uri_sqlite(self):
         return f"sqlite:///{self.DATABASE_NAME}.db"
 
+
 config = DatabaseConfig()
 engine = create_engine(
-    config.uri_postgres(), 
-    echo=True,
-    connect_args={'client_encoding': 'utf8'}
+    config.uri_postgres(), echo=True, connect_args={"client_encoding": "utf8"}
 )
 Session = sessionmaker(bind=engine)
+
 
 class Base(DeclarativeBase):
     def create_db(self):
         self.metadata.create_all(engine)
 
     def drop_db(self):
-        self.metadata.drop_all(engine) 
+        self.metadata.drop_all(engine)

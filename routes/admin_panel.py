@@ -48,7 +48,7 @@ def admin_panel():
         return redirect(url_for("admin.admin_panel"))
 
     filter_status = request.args.get("status", "all")
-    
+
     with Session() as session:
         if filter_status == "active":
             stmt = select(Menu).where(Menu.active == True)
@@ -56,16 +56,15 @@ def admin_panel():
             stmt = select(Menu).where(Menu.active == False)
         else:
             stmt = select(Menu)
-        
+
         positions = session.scalars(stmt).all()
 
     return render_template(
-        "administrate/admin_panel.html", 
-        title="Admin Panel", 
+        "administrate/admin_panel.html",
+        title="Admin Panel",
         all_positions=positions,
-        current_filter=filter_status
+        current_filter=filter_status,
     )
-
 
 
 # --- Створення нового меню ---
@@ -157,9 +156,12 @@ def all_orders():
 
     return render_template("administrate/orders.html", orders_results=orders_results)
 
+
 @bp.route("/users", methods=["GET"])
 @admin_required
 def all_users():
     with Session() as session:
         users = session.scalars(select(User)).all()
-    return render_template("administrate/all_users.html", users=users, title="Все пользователи")
+    return render_template(
+        "administrate/all_users.html", users=users, title="Все пользователи"
+    )

@@ -12,26 +12,26 @@ def init_db():
     session = Session()
 
     user = User(
-        username="admin", 
-        email="admin@example.com", 
+        username="admin",
+        email="admin@example.com",
         hash_password=generate_password_hash("admin"),
-        is_admin=True
+        is_admin=True,
     )
-    
+
     user2 = User(
-        username="user", 
-        email="user@example.com", 
+        username="user",
+        email="user@example.com",
         hash_password=generate_password_hash("user"),
     )
-    
+
     m1 = Menu(
         name="Гункани з тунцем",
         price=150.00,
         rating=4,
         description="4 шт., тунець, ікра тобіко, майонез",
-        image_path=None,
+        image_path="static/images_menu/gunkan_tuna.jpg",
         category="Гункани",
-        active=True
+        active=True,
     )
 
     m2 = Menu(
@@ -39,9 +39,9 @@ def init_db():
         price=220.00,
         rating=5,
         description="8 шт., лосось, авокадо, вершковий сир, рис, норі",
-        image_path=None,
+        image_path="static/images_menu/Filadelfia.jpg",
         category="Роли",
-        active=True
+        active=True,
     )
 
     m3 = Menu(
@@ -49,9 +49,9 @@ def init_db():
         price=180.00,
         rating=5,
         description="Класична піца з сиром моцарела та томатним соусом",
-        image_path=None,
+        image_path="static/images_menu/pizza.jpg",
         category="Піца",
-        active=True
+        active=True,
     )
 
     m4 = Menu(
@@ -59,9 +59,9 @@ def init_db():
         price=200.00,
         rating=4,
         description="Паста з беконом, вершковим соусом і сиром пармезан",
-        image_path=None,
+        image_path="static/images_menu/pasta.jpg",
         category="Паста",
-        active=True
+        active=True,
     )
 
     m5 = Menu(
@@ -69,12 +69,12 @@ def init_db():
         price=60.00,
         rating=5,
         description="Домашній лимонад з лимоном і м’ятою",
-        image_path=None,
+        image_path="static/images_menu/lemonade.jpg",
         category="Напої",
-        active=True
+        active=True,
     )
 
-    session.add_all([user, user2, m1, m2, m3, m4, m5])  
+    session.add_all([user, user2, m1, m2, m3, m4, m5])
     session.commit()
     session.close()
 

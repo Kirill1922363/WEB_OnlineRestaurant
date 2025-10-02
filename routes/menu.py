@@ -15,6 +15,7 @@ from settings import Session
 
 bp = Blueprint("menu", __name__)
 
+
 @bp.route("/menu")
 def list_menu_items():
     with Session() as session:
@@ -27,22 +28,28 @@ def list_menu_items():
         "menu/list.html", menu_items=menu_items_list, title="Menu Aurora"
     )
 
+
 @bp.route("/<int:item_id>")
 def details_menu_item(item_id):
     with Session() as session:
         menu_item = session.scalar(select(Menu).where(Menu.id == item_id))
         if not menu_item:
             return abort(404)
-        
+
         similar_items = session.scalars(
-            select(Menu).where(
+            select(Menu)
+            .where(
                 Menu.category == menu_item.category,
                 Menu.id != item_id,
-                Menu.active == True
-            ).limit(4)
+                Menu.active == True,
+            )
+            .limit(4)
         ).all()
-        
-    return render_template("menu/details.html", menu_item=menu_item, similar_items=similar_items)
+
+    return render_template(
+        "menu/details.html", menu_item=menu_item, similar_items=similar_items
+    )
+
 
 @bp.route("/order/add/<int:item_id>", methods=["POST"])
 @login_required
@@ -61,5 +68,3 @@ def add_to_order(item_id):
         session["basket"] = basket
     flash(f"позицію {item_id} додано до кошика")
     return redirect(url_for("menu.details_menu_item", item_id=item_id))
-
-
