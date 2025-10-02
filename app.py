@@ -41,7 +41,5 @@ app.register_blueprint(errors.bp, url_prefix="/error")
 
 
 if __name__ == "__main__":
-    import os
     print(app.url_map)
-    port = int(os.environ.get("PORT", 5050))  
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(debug=True, port=5050)
